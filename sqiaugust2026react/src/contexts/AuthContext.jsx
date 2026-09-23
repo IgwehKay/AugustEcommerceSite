@@ -17,7 +17,7 @@ export const AuthProvider = ({children})=>{
 
     const navigate = useNavigate();
 
-    const apiUrl = import.meta.env.VITE_API_URL
+    const apiUrl = import.meta.env.VITE_API_URL || "https://augustecommercesite.onrender.com/api/v1";
 
     const [loading, setLoading] = useState(false);
     const [token, setToken] = useState(() => localStorage.getItem("token"));
