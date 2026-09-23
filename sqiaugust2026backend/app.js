@@ -12,8 +12,23 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
-app.use(cors({ origin: process.env.FRONTEND_URL }));
-    app.use(morgan("dev"))
+const allowedOrigins = [
+    process.env.FRONTEND_URL,
+    "http://localhost:5173",
+    "https://august-ecommerce-site-uwc3-one.vercel.app"
+]
+    .filter(Boolean)
+    .map((url) => url.replace(/\/+$/, ""));
+
+app.use(cors({
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin.replace(/\/+$/, ""))) {
+            return callback(null, true);
+        }
+        return callback(new Error("Not allowed by CORS"));
+    },
+}));
+app.use(morgan("dev"))
 
 
 app.get('/', (req, res)=>{
