@@ -81,7 +81,11 @@ const signUp = async (req, res, next) => {
 
     // Email delivery should not keep the signup request open.
     sendEmail(verificationMailOptions).catch((error) => {
-      console.error("Verification email failed:", error.message);
+      console.error("Verification email failed:", {
+        message: error.message,
+        code: error.code,
+        response: error.response,
+      });
     });
   } catch (error) {
     next(error);
