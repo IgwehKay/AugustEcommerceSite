@@ -37,33 +37,34 @@
 
 const nodemailer = require('nodemailer');
 
-const sendEmail = async(options)=>{
-    const email = process.env.EMAIL;
-    const password = process.env.EMAIL_PASSWORD;
+const sendEmail = async (options) => {
+    const email = process.env.EMAIL?.trim();
+    const password = process.env.EMAIL_PASSWORD?.replace(/\s/g, '');
 
-
-    //creating email transporter
+    if (!email || !password) {
+        throw new Error('EMAIL and EMAIL_PASSWORD environment variables are required');
+    }
 
     const transporter = nodemailer.createTransport({
-        service: "gmail",
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        family: 4,
         auth: {
             user: email,
-            pass: password
-        }
+            pass: password,
+        },
+        connectionTimeout: 10000,
+        greetingTimeout: 10000,
+        socketTimeout: 15000,
     });
 
-
-    //configure options
-
-    const mailOptions = {
-        from: "Shopsy <officialrentdirect@gmail.com>",
+    await transporter.sendMail({
+        from: `Shopsy <${email}>`,
         to: options.email,
         subject: options.subject,
-        text: options.message
-    };
-
-
-    await transporter.sendMail(mailOptions)
+        text: options.message,
+    });
 };
 
 module.exports = sendEmail;
