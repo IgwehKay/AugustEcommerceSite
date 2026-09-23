@@ -1,25 +1,19 @@
 const nodemailer = require('nodemailer');
 
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASSWORD
+    },
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 15000
+});
+
 const sendEmail = async(options)=>{
-    const email = process.env.EMAIL;
-    const password = process.env.EMAIL_PASSWORD;
-
-
-    //creating email transporter
-
-    const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-            user: email,
-            pass: password
-        }
-    });
-
-
-    //configure options
-
     const mailOptions = {
-        from: "Shopsy <officialrentdirect@gmail.com>",
+        from: process.env.EMAIL,
         to: options.email,
         subject: options.subject,
         text: options.message
