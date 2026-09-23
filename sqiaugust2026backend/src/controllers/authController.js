@@ -43,18 +43,6 @@ const signUp = async (req, res, next) => {
       throw new AppError("Failed to create user");
     }
 
-    //Send mail verification
-
-    const options = {
-      email: email,
-      subject:
-        "Welcome to SQI AUGUST Ecommerce platform, where product price get better",
-      message:
-        "Welcome onboard. We are pleased to have you. Shop Now, get better price.",
-    };
-
-    await sendEmail(options);
-
     //Create verification token
 
     const verificationToken = crypto.randomBytes(32).toString("hex");
@@ -77,8 +65,6 @@ const signUp = async (req, res, next) => {
       message: verificationMessage,
     };
 
-    await sendEmail(verificationMailOptions);
-
     user.verification_token = hashedVerficationToken;
 
     await user.save();
@@ -92,12 +78,13 @@ const signUp = async (req, res, next) => {
         token,
       },
     });
+
+    // Email delivery should not keep the signup request open.
+    sendEmail(verificationMailOptions).catch((error) => {
+      console.error("Verification email failed:", error.message);
+    });
   } catch (error) {
     next(error);
-    res.status(404).json({
-      status: "Failed",
-      message: error.message,
-    });
   }
 };
 
