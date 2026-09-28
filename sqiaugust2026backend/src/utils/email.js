@@ -75,30 +75,69 @@
 // module.exports = sendEmail;
 
 
-const { Resend } = require("resend");
+// const { Resend } = require("resend");
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// const resend = new Resend(process.env.RESEND_API_KEY);
+
+// const sendEmail = async (options) => {
+//     if (!process.env.RESEND_API_KEY) {
+//         throw new Error("RESEND_API_KEY environment variable is required");
+//     }
+
+//     const { data, error } = await resend.emails.send({
+//         from: "Shopsy <onboarding@resend.dev>",
+//         to: [options.email],
+//         subject: options.subject,
+//         text: options.message,
+//     });
+
+//     if (error) {
+//         console.error("Resend email error:", error);
+//         throw new Error(error.message || "Failed to send email");
+//     }
+
+//     console.log(`Email sent successfully. ID: ${data.id}`);
+
+//     return data;
+// };
+
+// module.exports = sendEmail;
+
+
+
+const { BrevoClient } = require("@getbrevo/brevo");
+
+const brevo = new BrevoClient({
+    apiKey: process.env.BREVO_API_KEY,
+});
 
 const sendEmail = async (options) => {
-    if (!process.env.RESEND_API_KEY) {
-        throw new Error("RESEND_API_KEY environment variable is required");
+    if (!process.env.BREVO_API_KEY) {
+        throw new Error("BREVO_API_KEY environment variable is required");
     }
 
-    const { data, error } = await resend.emails.send({
-        from: "Shopsy <onboarding@resend.dev>",
-        to: [options.email],
-        subject: options.subject,
-        text: options.message,
-    });
+    try {
+        const result = await brevo.transactionalEmails.sendTransacEmail({
+            sender: {
+                name: "Shopsy",
+                email: process.env.EMAIL,
+            },
+            to: [
+                {
+                    email: options.email,
+                },
+            ],
+            subject: options.subject,
+            textContent: options.message,
+        });
 
-    if (error) {
-        console.error("Resend email error:", error);
-        throw new Error(error.message || "Failed to send email");
+        console.log("Email sent successfully:", result.messageId);
+
+        return result;
+    } catch (error) {
+        console.error("Brevo email error:", error);
+        throw error;
     }
-
-    console.log(`Email sent successfully. ID: ${data.id}`);
-
-    return data;
 };
 
 module.exports = sendEmail;
