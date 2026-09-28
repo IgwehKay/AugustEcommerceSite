@@ -103,7 +103,7 @@ export const AuthProvider = ({children})=>{
         setLoading(true);
         try {
             const res = await axios.get(
-                `${apiUrl}/auth/verify/${email}/${verificationToken}`,
+                `${apiUrl}/auth/verify/${encodeURIComponent(email)}/${encodeURIComponent(verificationToken)}`,
             );
 
             toast.success(res.data.message || "Email verified successfully");
@@ -211,4 +211,3 @@ export const AuthProvider = ({children})=>{
 
     return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>
 }
-
