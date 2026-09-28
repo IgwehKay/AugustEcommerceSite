@@ -36,6 +36,7 @@
 
 
 const nodemailer = require('nodemailer');
+const dns = require('node:dns').promises;
 
 const sendEmail = async (options) => {
     const email = process.env.EMAIL?.trim();
@@ -45,11 +46,15 @@ const sendEmail = async (options) => {
         throw new Error('EMAIL and EMAIL_PASSWORD environment variables are required');
     }
 
+    const [smtpHost] = await dns.resolve4('smtp.gmail.com');
+
     const transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
+        host: smtpHost,
         port: 465,
         secure: true,
-        family: 4,
+        tls: {
+            servername: 'smtp.gmail.com',
+        },
         auth: {
             user: email,
             pass: password,
