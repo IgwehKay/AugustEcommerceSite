@@ -1,26 +1,19 @@
-import React from "react";
-
-import { useNavigate, Link } from "react-router-dom";
-
 const Footer = () => {
-
-    const navigate = useNavigate();
-
     return (
-        <footer style={style.footer}>
-            <div style={style.footerMainContainer}>
-                <div style={style.footerContainer}>
+        <footer className="site-footer" style={style.footer}>
+            <div className="footer-main-container" style={style.footerMainContainer}>
+                <div className="footer-container" style={style.footerContainer}>
                     <h2 style={{ marginBottom: "15px" }}>August Ecommerce</h2>
                     <p style={{ lineHeight: "1.6", color: "#ccc" }}>Your trusted destination for quality beauty and skincare products.</p>
                 </div>
 
-                <div style={style.footerContainer}>
+                <div className="footer-container" style={style.footerContainer}>
                     <h4 style={{ marginBottom: "15px" }}>Contact Us</h4>
                     <p style={{ lineHeight: "1.6", color: "#ccc" }}>Email: info@beautystore.com</p>
                     <p style={{ lineHeight: "1.6", color: "#ccc" }}>Phone: +234 800 000 0000</p>
                 </div>
 
-                <div>
+                <div className="footer-container">
                     <h4 style={{ marginBottom: "15px" }}>
                         Business Hours
                     </h4>

@@ -31,7 +31,7 @@ const Fetch = ({ dark }) => {
       <h1 style={style.heading}>All products collection</h1>
       {loading && <p style={style.message}>Loading products...</p>}
       {error && <p style={{ ...style.message, color: "#c62828" }}>{error}</p>}
-      <div style={style.container}>
+      <div className="products-grid fakestore-grid" style={style.container}>
         {products.map((product) => (
           <div
             style={{
@@ -42,7 +42,7 @@ const Fetch = ({ dark }) => {
             }}
             key={product.id}
           >
-            <img style={{ width: "250px" }} src={product.image} alt={product.title} />
+            <img className="fakestore-image" style={{ width: "250px" }} src={product.image} alt={product.title} />
 
             <h2>{product.title}</h2>
 

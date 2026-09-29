@@ -6,10 +6,12 @@ const AppButton = ({
     handleClick,
     type,
     disabled,
+    className,
 }) => {
     return (
         <button
             type={type ? type : "button"}
+            className={className}
             onClick={handleClick}
             style={{
                 color: textColor ? textColor : "black",

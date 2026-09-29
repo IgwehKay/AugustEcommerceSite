@@ -14,6 +14,7 @@ import Products from "./pages/Products";
 import { AuthProvider } from "./contexts/AuthContext";
 import VerifyEmailPage from "./pages/verifyEmail";
 import Profile from "./pages/Profile";
+import { CartProvider } from "./pages/AddCart.jsx";
 
 const App = () => {
   const [dark, setDark] = useState(false);
@@ -30,19 +31,21 @@ const App = () => {
     <>
       <Router>
         <AuthProvider>
-          <Nav dark={dark} theme={theme} />
-          <Routes>
-            <Route path="/" element={<Landingpage dark={dark} />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/create-product" element={<Createproduct dark={dark} />} />
-            <Route path="/products" element={<Products dark={dark} />} />
-            <Route path="/login" element={<Login />} />
+          <CartProvider>
+            <Nav dark={dark} theme={theme} />
+            <Routes>
+              <Route path="/" element={<Landingpage dark={dark} />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/create-product" element={<Createproduct dark={dark} />} />
+              <Route path="/products" element={<Products dark={dark} />} />
+              <Route path="/login" element={<Login />} />
 
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/verify" element={<VerifyEmailPage />} />
-            <Route path="/verify/:email/:verificationToken" element={<VerifyEmailPage />} />
-            <Route path="/profile" element={<Profile />} />
-          </Routes>
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/verify" element={<VerifyEmailPage />} />
+              <Route path="/verify/:email/:verificationToken" element={<VerifyEmailPage />} />
+              <Route path="/profile" element={<Profile />} />
+            </Routes>
+          </CartProvider>
 
           <ToastContainer
             position="top-right"

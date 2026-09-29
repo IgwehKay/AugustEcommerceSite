@@ -108,9 +108,10 @@
 
 
 import { useState, useEffect } from "react";
-import AppButton from "../components/AppButton";
+import { useCart } from "../pages/AddCart.jsx";
 
 const Fetch = ({ dark }) => {
+  const { addToCart } = useCart();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -155,9 +156,9 @@ const Fetch = ({ dark }) => {
       {loading && <p style={style.message}>Loading products...</p>}
       {error && <p style={{ ...style.message, color: "#c62828" }}>{error}</p>}
 
-      <div style={style.container}>
+      <div className="products-grid" style={style.container}>
         {products.map((product) => (
-          <div
+          <div className='product-box'
             key={product._id || product.id}
             style={{
               ...style.productCards,
@@ -172,28 +173,35 @@ const Fetch = ({ dark }) => {
               alt={product.title}
             />
 
-            <h3 style={{ ...style.productTitle, color: dark ? "#fff" : "#222" }}>
+            <h3 style={{ ...style.productTitle, color: dark ? "#fff" : "#222" }} className="product-title">
               {product.title}
             </h3>
 
             <p style={style.p}>{product.description}</p>
-            <span style={style.price}>${product.price}</span>
+            <span className="price" style={style.price}>${product.price}</span>
 
-            <button
-              style={style.actionButton}
-              onClick={() => console.log("View product", product._id || product.id)}
-            >
-              View Product
-            </button>
+            <div className="product-actions">
+              <button
+                style={style.actionButton}
+                onClick={() => console.log("View product", product._id || product.id)}
+              >
+                View Product
+              </button>
 
-            <div style={{ height: "12px" }} />
-
-            <button
-              style={style.actionButton}
-              onClick={() => console.log("Add to cart", product._id || product.id)}
-            >
-              Add to Cart
-            </button>
+              <button
+                className="add-cart"
+                style={style.actionButton2}
+                onClick={() => addToCart({
+                  id: product._id || product.id,
+                  image: product.product_image,
+                  title: product.title,
+                  description: product.description,
+                  price: Number(product.price),
+                })}
+              >
+                Add to Cart
+              </button>
+            </div>
           </div>
         ))}
       </div>
@@ -257,7 +265,6 @@ const style = {
     margin: "0 20px 18px",
   },
   actionButton: {
-    width: "100%",
     padding: "12px",
     border: "none",
     borderRadius: "6px",
@@ -269,8 +276,19 @@ const style = {
     margin: "0 20px",
     width: "calc(100% - 40px)",
   },
+
+  actionButton2: {
+    padding: "12px",
+    border: "none",
+    borderRadius: "6px",
+    background: "#ff1491d0",
+    color: "#fff",
+    fontSize: "15px",
+    cursor: "pointer",
+    transition: "background 0.3s ease",
+    margin: "0 20px",
+    width: "calc(100% - 40px)",
+  },
 };
 
 export default Fetch;
-
-

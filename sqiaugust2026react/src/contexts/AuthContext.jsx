@@ -33,17 +33,17 @@ export const AuthProvider = ({children})=>{
     const signUp = async(data)=>{
         setLoading(true);
         try {
-            const res = await axios.post(`${apiUrl}/auth/signup`, data, {
+            await axios.post(`${apiUrl}/auth/signup`, data, {
                 headers: {
                     "Content-Type": "application/json",
                 },
             });
 
-            setToken(res.data.data.token);
-            setUser(res.data.data.user);
-
-            localStorage.setItem("token", res.data.data.token);
-            localStorage.setItem("user", JSON.stringify(res.data.data.user));
+            // Creating an account does not start an authenticated session.
+            setToken(null);
+            setUser(null);
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
 
             toast.success("Signup successful");
             navigate("/login");

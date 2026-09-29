@@ -1,14 +1,12 @@
-import React from 'react'
-
 const Hero = () => {
   return (
-    <section style={style.section}>
+    <section className="hero-section" style={style.section}>
         <div>
             <h1>AugShop</h1>
             <p>Shop now, pay later!</p>
         </div>
 
-        <div>
+        <div className="hero-image">
             <img src="/ecommerce-hero.png" alt=""  style={{width: '600px'}}/>
         </div>
     </section>

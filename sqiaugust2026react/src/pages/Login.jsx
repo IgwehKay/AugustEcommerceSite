@@ -120,7 +120,7 @@ const styles = {
     width: "280px",
     height: "280px",
     borderRadius: "50%",
-    background: "rgba(76, 175, 160, 0.18)",
+    // background: "rgba(76, 175, 160, 0.18)",
     filter: "blur(42px)",
     bottom: "-60px",
     right: "-80px",
