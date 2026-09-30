@@ -139,7 +139,7 @@ const styles = {
     marginTop: "20px",
   },
   backButton: {
-    margin: "10px 130px 0 20px",
+    margin: "10px 0 0 35px",
     width: "max-content",
     padding: "10px 12px",
     border: "none",
