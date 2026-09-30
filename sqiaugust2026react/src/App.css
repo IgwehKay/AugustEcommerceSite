@@ -228,6 +228,14 @@ body {
     min-width: 0;
 }
 
+.product-card-image {
+    transition: transform 0.3s ease;
+}
+
+.product-card-image:hover {
+    transform: scale(1.1);
+}
+
 .product-actions {
     display: flex;
     flex-direction: column;

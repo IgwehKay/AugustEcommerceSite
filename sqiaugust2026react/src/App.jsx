@@ -14,7 +14,9 @@ import Products from "./pages/Products";
 import { AuthProvider } from "./contexts/AuthContext";
 import VerifyEmailPage from "./pages/verifyEmail";
 import Profile from "./pages/Profile";
+import ProductDetails from "./pages/ProductDetails";
 import { CartProvider } from "./pages/AddCart.jsx";
+import Orders from "./pages/Orders";
 
 const App = () => {
   const [dark, setDark] = useState(false);
@@ -38,8 +40,9 @@ const App = () => {
               <Route path="/about" element={<About />} />
               <Route path="/create-product" element={<Createproduct dark={dark} />} />
               <Route path="/products" element={<Products dark={dark} />} />
+              <Route path="/product/:id" element={<ProductDetails dark={dark} />} />
               <Route path="/login" element={<Login />} />
-
+              <Route path="/orders" element={<Orders />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/verify" element={<VerifyEmailPage />} />
               <Route path="/verify/:email/:verificationToken" element={<VerifyEmailPage />} />

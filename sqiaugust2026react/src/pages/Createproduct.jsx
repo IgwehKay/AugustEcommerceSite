@@ -1,12 +1,14 @@
 import { useEffect, useMemo, useState } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 import AppButton from '../components/AppButton'
 import { useAuth } from '../contexts/AuthContext'
 import './Createproduct.css'
 
 const Createproduct = ( {dark} ) => {
-  const { token } = useAuth()
+  const { token, user } = useAuth()
+  const navigate = useNavigate()
   const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1'
   const [product, setProduct] = useState({
     title: '',
@@ -19,6 +21,12 @@ const Createproduct = ( {dark} ) => {
     () => (product.image ? URL.createObjectURL(product.image) : ''),
     [product.image],
   )
+
+  useEffect(() => {
+    if (!token || !user) {
+      navigate('/login', { replace: true })
+    }
+  }, [navigate, token, user])
 
   useEffect(() => {
     return () => {

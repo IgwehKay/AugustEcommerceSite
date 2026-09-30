@@ -53,35 +53,31 @@ const Nav = ({ dark, theme }) => {
               </Link>
             </li>
 
-            {isAuthenticated && (
-              <>
-                <li style={{ listStyle: "none" }}>
-                  <Link
-                    to="/create-product"
-                    onClick={() => setMenuOpen(false)}
-                    style={{
-                      textDecoration: 'none',
-                      color: dark ? "white" : "#222",
-                    }}
-                  >
-                    Add Product
-                  </Link>
-                </li>
+            <li style={{ listStyle: "none" }}>
+              <Link
+                to="/create-product"
+                onClick={() => setMenuOpen(false)}
+                style={{
+                  textDecoration: 'none',
+                  color: dark ? "white" : "#222",
+                }}
+              >
+                Add Product
+              </Link>
+            </li>
 
-                <li style={{ listStyle: "none" }}>
-                  <Link
-                    to="/Orders"
-                    onClick={() => setMenuOpen(false)}
-                    style={{
-                      textDecoration: 'none',
-                      color: dark ? "white" : "#222",
-                    }}
-                  >
-                    Orders
-                  </Link>
-                </li>
-              </>
-            )}
+            <li style={{ listStyle: "none" }}>
+              <Link
+                to="/orders"
+                onClick={() => setMenuOpen(false)}
+                style={{
+                  textDecoration: 'none',
+                  color: dark ? "white" : "#222",
+                }}
+              >
+                Orders
+              </Link>
+            </li>
 
             <li style={{ listStyle: "none" }}>
               <Link

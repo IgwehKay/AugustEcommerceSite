@@ -1,12 +1,20 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useAuth } from "../contexts/AuthContext";
 import PasswordField from "../components/PasswordField";
 
 const Profile = () => {
-  const { user, loading, updateProfile, updateProfilePicture, updatePassword } = useAuth();
+  const { token, user, loading, updateProfile, updateProfilePicture, updatePassword } = useAuth();
+  const navigate = useNavigate();
   const fileInputRef = useRef(null);
+
+  useEffect(() => {
+    if (!token || !user) {
+      navigate("/login", { replace: true });
+    }
+  }, [navigate, token, user]);
 
   const profileInitialValues = {
     firstname: user?.firstname || "",
