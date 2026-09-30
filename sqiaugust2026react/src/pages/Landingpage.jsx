@@ -30,7 +30,7 @@ const Landingpage = ({ dark }) => {
 
   const handleAddToCart = (product) => {
     if (!isAuthenticated) {
-      navigate("/signup");
+      navigate("/login");
       return;
     }
 

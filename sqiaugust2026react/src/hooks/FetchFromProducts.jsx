@@ -1,21 +1,21 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 import { useCart } from "../pages/AddCart.jsx";
 
 const Fetch = ({ dark }) => {
   const { addToCart } = useCart();
+  const { token, user } = useAuth();
+  const navigate = useNavigate();
+  const isAuthenticated = Boolean(token && user);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
     const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8000/api/v1";
 
-    fetch(`${apiUrl}/product/getallproduct`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    fetch(`${apiUrl}/product/getallproducts`)
       .then(async (response) => {
         const data = await response.json().catch(() => null);
 
@@ -33,6 +33,30 @@ const Fetch = ({ dark }) => {
         setLoading(false);
       });
   }, []);
+
+  const handleViewProduct = (product) => {
+    if (!isAuthenticated) {
+      navigate("/login");
+      return;
+    }
+
+    navigate(`/product/${product._id || product.id}`);
+  };
+
+  const handleAddToCart = (product) => {
+    if (!isAuthenticated) {
+      navigate("/login");
+      return;
+    }
+
+    addToCart({
+      id: product._id || product.id,
+      image: product.product_image,
+      title: product.title,
+      description: product.description,
+      price: Number(product.price),
+    });
+  };
 
   return (
     <main
@@ -74,7 +98,7 @@ const Fetch = ({ dark }) => {
             <div className="product-actions">
               <button
                 style={style.actionButton}
-                onClick={() => console.log("View product", product._id || product.id)}
+                onClick={() => handleViewProduct(product)}
               >
                 View Product
               </button>
@@ -82,13 +106,7 @@ const Fetch = ({ dark }) => {
               <button
                 className="add-cart"
                 style={style.actionButton2}
-                onClick={() => addToCart({
-                  id: product._id || product.id,
-                  image: product.product_image,
-                  title: product.title,
-                  description: product.description,
-                  price: Number(product.price),
-                })}
+                onClick={() => handleAddToCart(product)}
               >
                 Add to Cart
               </button>
