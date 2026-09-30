@@ -17,7 +17,7 @@ router.route("/getallproducts").get(productController.getAllProducts);
 router.route("/getproducts").get(productController.getAllProducts);
 
 router.route("/:id")
-.get(authMiddleware.protectRoute, productController.getProductDetails)
+.get(productController.getProductDetails)
 .patch(authMiddleware.protectRoute, productController.updateProductDetails)
 .delete(authMiddleware.protectRoute, productController.deleteProduct)
 
