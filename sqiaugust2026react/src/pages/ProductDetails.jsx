@@ -127,6 +127,7 @@ const styles = {
   price: {
     fontSize: "20px",
     fontWeight: "bold",
+    marginTop: "20px"
   },
   button: {
     padding: "12px 20px",
