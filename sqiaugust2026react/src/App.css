@@ -233,7 +233,7 @@ body {
 }
 
 .product-card-image:hover {
-    transform: scale(1.1);
+    transform: scale(0.5);
 }
 
 .product-actions {
