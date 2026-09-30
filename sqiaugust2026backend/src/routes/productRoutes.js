@@ -10,7 +10,10 @@ const router = express.Router();
 
 router.route("/createproduct").post(authMiddleware.protectRoute, imageUploads, productController.createNewProduct);
 
-router.route("/getallproduct").get(authMiddleware.protectRoute, productController.getAllProducts);
+router.route("/getallproduct").get(productController.getAllProducts);
+
+//This route is not protected, used for fectching products to the landing page.
+router.route("/getallproducts").get(productController.getAllProducts);
 
 router.route("/:id")
 .get(authMiddleware.protectRoute, productController.getProductDetails)

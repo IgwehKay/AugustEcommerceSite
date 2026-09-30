@@ -15,7 +15,7 @@ const productSchema = new mongoose.Schema({
     description: {
         type: String,
         required: [true, "Please provide product description"],
-        unique: [true, "Description must be unique"],
+        // unique: [true, "Description must be unique"],
         trim: true,
     },
 
